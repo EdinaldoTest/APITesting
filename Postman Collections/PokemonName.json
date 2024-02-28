@@ -1,0 +1,212 @@
+{
+	"info": {
+		"_postman_id": "4e476fdc-2422-4415-8efc-f0d4cbce4c7d",
+		"name": "Pokenon Name",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "PokemonList",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "12ce80e8-cf86-4e2d-9429-2d9584eeb040",
+						"exec": [
+							"pm.test('Status Code Should Return 200', function () {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"})",
+							"",
+							"// I want to list all Pokemon names in the response data ",
+							"const res  = pm.response.json()",
+							"const pokemonName = res.results.map(pokemon => pokemon.name)",
+							"console.log(pokemonName)",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "224d736e-cd47-4117-845c-ac0d756fd2f9",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://pokeapi.co/api/v2/pokemon/?limit=100",
+					"protocol": "https",
+					"host": [
+						"pokeapi",
+						"co"
+					],
+					"path": [
+						"api",
+						"v2",
+						"pokemon",
+						""
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "100"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PokemonByName",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "05657303-7eca-4097-b947-0d35dade4aa8",
+						"exec": [
+							"pm.test('Status Code Should Return 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response should contain Pokemon name of the pikachu\", function () {",
+							"const jData = pm.response.json();",
+							"pm.expect(jData.name).to.not.be.empty;",
+							"pm.expect(jData.name).to.equal('pikachu');",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "eeff14a9-2361-4beb-bdb6-32d7722a7d09",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "https://pokeapi.co/api/v2/pokemon/pikachu"
+			},
+			"response": []
+		},
+		{
+			"name": "PokemonByID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5c1c8473-6895-4213-a6b0-555ce6222f81",
+						"exec": [
+							"pm.test('Status Code Should Return 200', function () {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"",
+							"pm.test(\"Response should contain Pokemon ID and name\", function () {",
+							"const jData = pm.response.json();    ",
+							"pm.expect(jData.name).to.equal('pikachu');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "67f216fc-8f66-4a6c-aa1a-a8b5b054d4a8",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://pokeapi.co/api/v2/pokemon/25?id=25",
+					"protocol": "https",
+					"host": [
+						"pokeapi",
+						"co"
+					],
+					"path": [
+						"api",
+						"v2",
+						"pokemon",
+						"25"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "25"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "InvalidPokemonID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "83c845a6-4cd7-4989-8aae-94673dfe0738",
+						"exec": [
+							"pm.test('Invalid Pokemon ID return 404', function () {",
+							"    pm.expect(pm.response.code).to.equal(404);",
+							"})",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "af06c060-33a6-4665-af10-ab60872ecf43",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "https://pokeapi.co/api/v2/pokemon/9000"
+			},
+			"response": []
+		},
+		{
+			"name": "InvalidPokemonName",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "83c845a6-4cd7-4989-8aae-94673dfe0738",
+						"exec": [
+							"pm.test('Invalid Pokemon name returns', function () {",
+							"    pm.expect(pm.response.code).to.equal(404);",
+							"})",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "62245df4-2d77-441e-9df4-18049b1bbdfb",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "https://pokeapi.co/api/v2/pokemon/pikapika"
+			},
+			"response": []
+		}
+	]
+}
