@@ -1,0 +1,164 @@
+{
+	"info": {
+		"_postman_id": "33f28d35-6ba4-4f89-a59b-055c6028267e",
+		"name": "Pokemon Ability - loop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "PokemonAbilitylist",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4b7a6350-2798-430a-b50f-0ecde7eba8f5",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "fe1d90d5-9a6d-4f8b-8d0c-28c6c3b8a63a",
+						"exec": [
+							"pm.test('Status Code Should Return 200', function () {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"",
+							"//I want to extract the data \"Pokemon Ability Name\" from response",
+							"const res  = pm.response.json()",
+							"const abilityName = res.results.map(ability => ability.name)",
+							"console.log(abilityName)",
+							"",
+							"//I want to set the local postman variable, this variable only work in this response collection",
+							"pm.collectionVariables.set('abilityName', abilityName);",
+							"",
+							"",
+							"",
+							" ",
+							" ",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "2e3a94bc-6e68-4c24-a285-5b1dfbb9e868",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://pokeapi.co/api/v2/ability/?limit=20",
+					"protocol": "https",
+					"host": [
+						"pokeapi",
+						"co"
+					],
+					"path": [
+						"api",
+						"v2",
+						"ability",
+						""
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "20"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PokemonAbilityName",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "efb3e487-1a71-4772-8c87-c57839ec236a",
+						"exec": [
+							"pm.test('Status Code Should Return 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"",
+							"    ",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f31df7c0-af26-4881-97f2-d95ccb274d14",
+						"exec": [
+							"const abilityName = pm.collectionVariables.get(\"abilityName\");\r",
+							"pm.collectionVariables.set('currentAbilityName',abilityName.shift());\r",
+							"\r",
+							"if (Array.isArray(abilityName) && abilityName.length > 0 ){\r",
+							"    postman.setNextRequest('PokemonAbilityName');\r",
+							"}else {\r",
+							"    postman.setNextRequest(null);\r",
+							"}\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "a8f5ede4-ae95-4f94-93d8-d9abe309a072",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "https://pokeapi.co/api/v2/ability/"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "9c831287-ceb3-407d-b906-c26d5656da2f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "3503bbbf-c186-4b8f-939a-150b93601a80",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "abilityName",
+			"value": ""
+		},
+		{
+			"key": "currentAbilityName",
+			"value": ""
+		}
+	]
+}
